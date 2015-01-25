@@ -12,7 +12,7 @@ The training data were obtained from  https://d396qusza40orc.cloudfront.net/pred
 Loading the data
 
 ```{r}
-pml<-read.csv("pml-training.csv")
+pml<-read.csv("c://tmp//pml-training.csv")
 ```
 
 A quick summary of the data set shows us that there are lot of variables

@@ -13,15 +13,7 @@ Loading the data
 
 
 ```r
-pml<-read.csv("pml-training.csv")
-```
-
-```
-## Warning: cannot open file 'pml-training.csv': No such file or directory
-```
-
-```
-## Error: cannot open the connection
+pml<-read.csv("c://tmp//pml-training.csv")
 ```
 
 A quick summary of the data set shows us that there are lot of variables
@@ -94,7 +86,8 @@ colSums(is.na(pml2))
 ##                    0                    0                    0
 ```
 
-We will also remove the first 7 variables  as our model should be independent of them.
+We will also remove the first 7 variables  as we don't want our mode to depend on these variables.
+
 
 ```r
 pml2<-pml2[,-c(1:7)]

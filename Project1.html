@@ -207,13 +207,7 @@ hr {
 
 <p>Loading the data</p>
 
-<pre><code class="r">pml&lt;-read.csv(&quot;pml-training.csv&quot;)
-</code></pre>
-
-<pre><code>## Warning: cannot open file &#39;pml-training.csv&#39;: No such file or directory
-</code></pre>
-
-<pre><code>## Error: cannot open the connection
+<pre><code class="r">pml&lt;-read.csv(&quot;c://tmp//pml-training.csv&quot;)
 </code></pre>
 
 <p>A quick summary of the data set shows us that there are lot of variables
@@ -1578,7 +1572,7 @@ colSums(is.na(pml2))
 ##                    0                    0                    0
 </code></pre>
 
-<p>We will also remove the first 7 variables  as our model should be independent of them.</p>
+<p>We will also remove the first 7 variables  as we don&#39;t want our mode to depend on these variables.</p>
 
 <pre><code class="r">pml2&lt;-pml2[,-c(1:7)]
 </code></pre>
