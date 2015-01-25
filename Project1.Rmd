@@ -1,0 +1,109 @@
+---
+title: "Practical Machine Learning - Course Project"
+output: html_document
+---
+
+
+
+## Loading and processing the data
+The training data were obtained from  https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
+
+
+Loading the data
+
+```{r}
+pml<-read.csv("pml-training.csv")
+```
+
+A quick summary of the data set shows us that there are lot of variables
+containing more then 90% of NA values.
+```{r,results='asis'}
+knitr::kable(summary(pml))
+```
+
+
+We will remove such variables
+```{r}
+pml2<-pml[,-grep("avg_|max_|min_|var_|stddev_|skewness_|kurtosis_|amplitude_",names(pml))]
+colSums(is.na(pml2))
+
+```
+
+We will also remove the first 7 variables  as we don't want our mode to depend on these variables.
+
+```{r}
+pml2<-pml2[,-c(1:7)]
+```
+
+
+## Machine learning model
+Now we will split the dataset into a training and testing part.
+The trainig part will contain 60% of data and will be used for training of our model. The test part will be used for cross validation
+
+```{r}
+library(caret)
+set.seed(1234)
+InTrain<-createDataPartition(y=pml2$classe,p=0.6,list=FALSE)
+training<-pml2[InTrain,]
+testing<-pml2[-InTrain,]
+```
+
+As this is a classification problem we've choosen a model based on random forrest algorithm.
+
+```{r,eval=FALSE}
+rf<-train(classe~.,data=training,method="rf")
+```
+
+```{r, eval=FALSE}
+> > > rf
+Random Forest 
+
+11776 samples
+   52 predictor
+    5 classes: 'A', 'B', 'C', 'D', 'E' 
+
+No pre-processing
+Resampling: Bootstrapped (25 reps) 
+
+Summary of sample sizes: 11776, 11776, 11776, 11776, 11776, 11776, ... 
+
+Resampling results across tuning parameters:
+
+  mtry  Accuracy   Kappa      Accuracy SD  Kappa SD   
+   2    0.9864051  0.9827977  0.002650521  0.003345575
+  27    0.9875215  0.9842125  0.001741941  0.002189933
+  52    0.9784516  0.9727337  0.004086763  0.005168504
+
+Accuracy was used to select the optimal model using  the largest value.
+The final value used for the model was mtry = 27. 
+
+```
+
+Now we will use our model on testing set and check for accuracy
+
+```{r, eval=FALSE}
+> pr<-predict(rf,testing)
+> table(pr,testing$classe)
+   
+pr     A    B    C    D    E
+  A 2219   10    0    0    0
+  B    8 1499   10    0    0
+  C    3    9 1348   22    0
+  D    0    0   10 1263   10
+  E    2    0    0    1 1432
+
+```
+
+Callculate the accuracy.
+
+```{r,eval=FALSE}
+sum(predict(rf,testing) == testing$classe)/NROW(testing$classe)
+[1] 0.9891665
+```
+## Out of sample accuracy
+Our expectation is that our out of sample model accuracy is <=98.9 %.
+
+
+
+
+

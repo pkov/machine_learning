@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Loading and processing the data</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h2>Loading and processing the data</h2>
+
+<p>The training data were obtained from  <a href="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv">https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv</a></p>
+
+<p>Loading the data</p>
+
+<pre><code class="r">pml&lt;-read.csv(&quot;pml-training.csv&quot;)
+</code></pre>
+
+<pre><code>## Warning: cannot open file &#39;pml-training.csv&#39;: No such file or directory
+</code></pre>
+
+<pre><code>## Error: cannot open the connection
+</code></pre>
+
+<p>A quick summary of the data set shows us that there are lot of variables
+containing more then 90% of NA values.</p>
+
+<pre><code class="r">knitr::kable(summary(pml))
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left"></th>
+<th align="left">X</th>
+<th align="left">user_name</th>
+<th align="left">raw_timestamp_part_1</th>
+<th align="left">raw_timestamp_part_2</th>
+<th align="left">cvtd_timestamp</th>
+<th align="left">new_window</th>
+<th align="left">num_window</th>
+<th align="left">roll_belt</th>
+<th align="left">pitch_belt</th>
+<th align="left">yaw_belt</th>
+<th align="left">total_accel_belt</th>
+<th align="left">kurtosis_roll_belt</th>
+<th align="left">kurtosis_picth_belt</th>
+<th align="left">kurtosis_yaw_belt</th>
+<th align="left">skewness_roll_belt</th>
+<th align="left">skewness_roll_belt.1</th>
+<th align="left">skewness_yaw_belt</th>
+<th align="left">max_roll_belt</th>
+<th align="left">max_picth_belt</th>
+<th align="left">max_yaw_belt</th>
+<th align="left">min_roll_belt</th>
+<th align="left">min_pitch_belt</th>
+<th align="left">min_yaw_belt</th>
+<th align="left">amplitude_roll_belt</th>
+<th align="left">amplitude_pitch_belt</th>
+<th align="left">amplitude_yaw_belt</th>
+<th align="left">var_total_accel_belt</th>
+<th align="left">avg_roll_belt</th>
+<th align="left">stddev_roll_belt</th>
+<th align="left">var_roll_belt</th>
+<th align="left">avg_pitch_belt</th>
+<th align="left">stddev_pitch_belt</th>
+<th align="left">var_pitch_belt</th>
+<th align="left">avg_yaw_belt</th>
+<th align="left">stddev_yaw_belt</th>
+<th align="left">var_yaw_belt</th>
+<th align="left">gyros_belt_x</th>
+<th align="left">gyros_belt_y</th>
+<th align="left">gyros_belt_z</th>
+<th align="left">accel_belt_x</th>
+<th align="left">accel_belt_y</th>
+<th align="left">accel_belt_z</th>
+<th align="left">magnet_belt_x</th>
+<th align="left">magnet_belt_y</th>
+<th align="left">magnet_belt_z</th>
+<th align="left">roll_arm</th>
+<th align="left">pitch_arm</th>
+<th align="left">yaw_arm</th>
+<th align="left">total_accel_arm</th>
+<th align="left">var_accel_arm</th>
+<th align="left">avg_roll_arm</th>
+<th align="left">stddev_roll_arm</th>
+<th align="left">var_roll_arm</th>
+<th align="left">avg_pitch_arm</th>
+<th align="left">stddev_pitch_arm</th>
+<th align="left">var_pitch_arm</th>
+<th align="left">avg_yaw_arm</th>
+<th align="left">stddev_yaw_arm</th>
+<th align="left">var_yaw_arm</th>
+<th align="left">gyros_arm_x</th>
+<th align="left">gyros_arm_y</th>
+<th align="left">gyros_arm_z</th>
+<th align="left">accel_arm_x</th>
+<th align="left">accel_arm_y</th>
+<th align="left">accel_arm_z</th>
+<th align="left">magnet_arm_x</th>
+<th align="left">magnet_arm_y</th>
+<th align="left">magnet_arm_z</th>
+<th align="left">kurtosis_roll_arm</th>
+<th align="left">kurtosis_picth_arm</th>
+<th align="left">kurtosis_yaw_arm</th>
+<th align="left">skewness_roll_arm</th>
+<th align="left">skewness_pitch_arm</th>
+<th align="left">skewness_yaw_arm</th>
+<th align="left">max_roll_arm</th>
+<th align="left">max_picth_arm</th>
+<th align="left">max_yaw_arm</th>
+<th align="left">min_roll_arm</th>
+<th align="left">min_pitch_arm</th>
+<th align="left">min_yaw_arm</th>
+<th align="left">amplitude_roll_arm</th>
+<th align="left">amplitude_pitch_arm</th>
+<th align="left">amplitude_yaw_arm</th>
+<th align="left">roll_dumbbell</th>
+<th align="left">pitch_dumbbell</th>
+<th align="left">yaw_dumbbell</th>
+<th align="left">kurtosis_roll_dumbbell</th>
+<th align="left">kurtosis_picth_dumbbell</th>
+<th align="left">kurtosis_yaw_dumbbell</th>
+<th align="left">skewness_roll_dumbbell</th>
+<th align="left">skewness_pitch_dumbbell</th>
+<th align="left">skewness_yaw_dumbbell</th>
+<th align="left">max_roll_dumbbell</th>
+<th align="left">max_picth_dumbbell</th>
+<th align="left">max_yaw_dumbbell</th>
+<th align="left">min_roll_dumbbell</th>
+<th align="left">min_pitch_dumbbell</th>
+<th align="left">min_yaw_dumbbell</th>
+<th align="left">amplitude_roll_dumbbell</th>
+<th align="left">amplitude_pitch_dumbbell</th>
+<th align="left">amplitude_yaw_dumbbell</th>
+<th align="left">total_accel_dumbbell</th>
+<th align="left">var_accel_dumbbell</th>
+<th align="left">avg_roll_dumbbell</th>
+<th align="left">stddev_roll_dumbbell</th>
+<th align="left">var_roll_dumbbell</th>
+<th align="left">avg_pitch_dumbbell</th>
+<th align="left">stddev_pitch_dumbbell</th>
+<th align="left">var_pitch_dumbbell</th>
+<th align="left">avg_yaw_dumbbell</th>
+<th align="left">stddev_yaw_dumbbell</th>
+<th align="left">var_yaw_dumbbell</th>
+<th align="left">gyros_dumbbell_x</th>
+<th align="left">gyros_dumbbell_y</th>
+<th align="left">gyros_dumbbell_z</th>
+<th align="left">accel_dumbbell_x</th>
+<th align="left">accel_dumbbell_y</th>
+<th align="left">accel_dumbbell_z</th>
+<th align="left">magnet_dumbbell_x</th>
+<th align="left">magnet_dumbbell_y</th>
+<th align="left">magnet_dumbbell_z</th>
+<th align="left">roll_forearm</th>
+<th align="left">pitch_forearm</th>
+<th align="left">yaw_forearm</th>
+<th align="left">kurtosis_roll_forearm</th>
+<th align="left">kurtosis_picth_forearm</th>
+<th align="left">kurtosis_yaw_forearm</th>
+<th align="left">skewness_roll_forearm</th>
+<th align="left">skewness_pitch_forearm</th>
+<th align="left">skewness_yaw_forearm</th>
+<th align="left">max_roll_forearm</th>
+<th align="left">max_picth_forearm</th>
+<th align="left">max_yaw_forearm</th>
+<th align="left">min_roll_forearm</th>
+<th align="left">min_pitch_forearm</th>
+<th align="left">min_yaw_forearm</th>
+<th align="left">amplitude_roll_forearm</th>
+<th align="left">amplitude_pitch_forearm</th>
+<th align="left">amplitude_yaw_forearm</th>
+<th align="left">total_accel_forearm</th>
+<th align="left">var_accel_forearm</th>
+<th align="left">avg_roll_forearm</th>
+<th align="left">stddev_roll_forearm</th>
+<th align="left">var_roll_forearm</th>
+<th align="left">avg_pitch_forearm</th>
+<th align="left">stddev_pitch_forearm</th>
+<th align="left">var_pitch_forearm</th>
+<th align="left">avg_yaw_forearm</th>
+<th align="left">stddev_yaw_forearm</th>
+<th align="left">var_yaw_forearm</th>
+<th align="left">gyros_forearm_x</th>
+<th align="left">gyros_forearm_y</th>
+<th align="left">gyros_forearm_z</th>
+<th align="left">accel_forearm_x</th>
+<th align="left">accel_forearm_y</th>
+<th align="left">accel_forearm_z</th>
+<th align="left">magnet_forearm_x</th>
+<th align="left">magnet_forearm_y</th>
+<th align="left">magnet_forearm_z</th>
+<th align="left">classe</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left"></td>
+<td align="left">Min.   :    1</td>
+<td align="left">adelmo  :3892</td>
+<td align="left">Min.   :1.32e+09</td>
+<td align="left">Min.   :   294</td>
+<td align="left">28/11/2011 14:14: 1498</td>
+<td align="left">no :19216</td>
+<td align="left">Min.   :  1</td>
+<td align="left">Min.   :-28.9</td>
+<td align="left">Min.   :-55.80</td>
+<td align="left">Min.   :-180.0</td>
+<td align="left">Min.   : 0.0</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">Min.   :-94</td>
+<td align="left">Min.   : 3</td>
+<td align="left">:19216</td>
+<td align="left">Min.   :-180</td>
+<td align="left">Min.   : 0</td>
+<td align="left">:19216</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   : 0</td>
+<td align="left">:19216</td>
+<td align="left">Min.   : 0</td>
+<td align="left">Min.   :-27</td>
+<td align="left">Min.   : 0</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :-51</td>
+<td align="left">Min.   :0</td>
+<td align="left">Min.   : 0</td>
+<td align="left">Min.   :-138</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :    0</td>
+<td align="left">Min.   :-1.0400</td>
+<td align="left">Min.   :-0.6400</td>
+<td align="left">Min.   :-1.460</td>
+<td align="left">Min.   :-120.00</td>
+<td align="left">Min.   :-69.0</td>
+<td align="left">Min.   :-275.0</td>
+<td align="left">Min.   :-52.0</td>
+<td align="left">Min.   :354</td>
+<td align="left">Min.   :-623</td>
+<td align="left">Min.   :-180.0</td>
+<td align="left">Min.   :-88.80</td>
+<td align="left">Min.   :-180.00</td>
+<td align="left">Min.   : 1.0</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :-167</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :    0</td>
+<td align="left">Min.   :-82</td>
+<td align="left">Min.   : 0</td>
+<td align="left">Min.   :   0</td>
+<td align="left">Min.   :-173</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :    0</td>
+<td align="left">Min.   :-6.370</td>
+<td align="left">Min.   :-3.440</td>
+<td align="left">Min.   :-2.33</td>
+<td align="left">Min.   :-404.0</td>
+<td align="left">Min.   :-318.0</td>
+<td align="left">Min.   :-636.0</td>
+<td align="left">Min.   :-584</td>
+<td align="left">Min.   :-392</td>
+<td align="left">Min.   :-597</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">Min.   :-73</td>
+<td align="left">Min.   :-173</td>
+<td align="left">Min.   : 4</td>
+<td align="left">Min.   :-89</td>
+<td align="left">Min.   :-180</td>
+<td align="left">Min.   : 1</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   : 0</td>
+<td align="left">Min.   :-153.7</td>
+<td align="left">Min.   :-149.6</td>
+<td align="left">Min.   :-150.87</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">Min.   :-70</td>
+<td align="left">Min.   :-113</td>
+<td align="left">:19216</td>
+<td align="left">Min.   :-150</td>
+<td align="left">Min.   :-147</td>
+<td align="left">:19216</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :  0</td>
+<td align="left">:19216</td>
+<td align="left">Min.   : 0.0</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :-129</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :    0</td>
+<td align="left">Min.   :-71</td>
+<td align="left">Min.   : 0</td>
+<td align="left">Min.   :   0</td>
+<td align="left">Min.   :-118</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :    0</td>
+<td align="left">Min.   :-204.00</td>
+<td align="left">Min.   :-2.10</td>
+<td align="left">Min.   : -2.4</td>
+<td align="left">Min.   :-419.0</td>
+<td align="left">Min.   :-189.0</td>
+<td align="left">Min.   :-334.0</td>
+<td align="left">Min.   :-643</td>
+<td align="left">Min.   :-3600</td>
+<td align="left">Min.   :-262.0</td>
+<td align="left">Min.   :-180.00</td>
+<td align="left">Min.   :-72.50</td>
+<td align="left">Min.   :-180.0</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">:19216</td>
+<td align="left">Min.   :-67</td>
+<td align="left">Min.   :-151</td>
+<td align="left">:19216</td>
+<td align="left">Min.   :-72</td>
+<td align="left">Min.   :-180</td>
+<td align="left">:19216</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :  0</td>
+<td align="left">:19216</td>
+<td align="left">Min.   :  0.0</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :-177</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :    0</td>
+<td align="left">Min.   :-68</td>
+<td align="left">Min.   : 0</td>
+<td align="left">Min.   :   0</td>
+<td align="left">Min.   :-155</td>
+<td align="left">Min.   :  0</td>
+<td align="left">Min.   :    0</td>
+<td align="left">Min.   :-22.000</td>
+<td align="left">Min.   : -7.02</td>
+<td align="left">Min.   : -8.09</td>
+<td align="left">Min.   :-498.0</td>
+<td align="left">Min.   :-632</td>
+<td align="left">Min.   :-446.0</td>
+<td align="left">Min.   :-1280</td>
+<td align="left">Min.   :-896</td>
+<td align="left">Min.   :-973</td>
+<td align="left">A:5580</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">1st Qu.: 4906</td>
+<td align="left">carlitos:3112</td>
+<td align="left">1st Qu.:1.32e+09</td>
+<td align="left">1st Qu.:252912</td>
+<td align="left">05/12/2011 11:24: 1497</td>
+<td align="left">yes:  406</td>
+<td align="left">1st Qu.:222</td>
+<td align="left">1st Qu.:  1.1</td>
+<td align="left">1st Qu.:  1.76</td>
+<td align="left">1st Qu.: -88.3</td>
+<td align="left">1st Qu.: 3.0</td>
+<td align="left">#DIV/0!  :   10</td>
+<td align="left">#DIV/0!  :   32</td>
+<td align="left">#DIV/0!:  406</td>
+<td align="left">#DIV/0!  :    9</td>
+<td align="left">#DIV/0!  :   32</td>
+<td align="left">#DIV/0!:  406</td>
+<td align="left">1st Qu.:-88</td>
+<td align="left">1st Qu.: 5</td>
+<td align="left">-1.1   :   30</td>
+<td align="left">1st Qu.: -88</td>
+<td align="left">1st Qu.: 3</td>
+<td align="left">-1.1   :   30</td>
+<td align="left">1st Qu.:  0</td>
+<td align="left">1st Qu.: 1</td>
+<td align="left">#DIV/0!:   10</td>
+<td align="left">1st Qu.: 0</td>
+<td align="left">1st Qu.:  1</td>
+<td align="left">1st Qu.: 0</td>
+<td align="left">1st Qu.:  0</td>
+<td align="left">1st Qu.:  2</td>
+<td align="left">1st Qu.:0</td>
+<td align="left">1st Qu.: 0</td>
+<td align="left">1st Qu.: -88</td>
+<td align="left">1st Qu.:  0</td>
+<td align="left">1st Qu.:    0</td>
+<td align="left">1st Qu.:-0.0300</td>
+<td align="left">1st Qu.: 0.0000</td>
+<td align="left">1st Qu.:-0.200</td>
+<td align="left">1st Qu.: -21.00</td>
+<td align="left">1st Qu.:  3.0</td>
+<td align="left">1st Qu.:-162.0</td>
+<td align="left">1st Qu.:  9.0</td>
+<td align="left">1st Qu.:581</td>
+<td align="left">1st Qu.:-375</td>
+<td align="left">1st Qu.: -31.8</td>
+<td align="left">1st Qu.:-25.90</td>
+<td align="left">1st Qu.: -43.10</td>
+<td align="left">1st Qu.:17.0</td>
+<td align="left">1st Qu.:  9</td>
+<td align="left">1st Qu.: -38</td>
+<td align="left">1st Qu.:  1</td>
+<td align="left">1st Qu.:    2</td>
+<td align="left">1st Qu.:-23</td>
+<td align="left">1st Qu.: 2</td>
+<td align="left">1st Qu.:   3</td>
+<td align="left">1st Qu.: -29</td>
+<td align="left">1st Qu.:  3</td>
+<td align="left">1st Qu.:    7</td>
+<td align="left">1st Qu.:-1.330</td>
+<td align="left">1st Qu.:-0.800</td>
+<td align="left">1st Qu.:-0.07</td>
+<td align="left">1st Qu.:-242.0</td>
+<td align="left">1st Qu.: -54.0</td>
+<td align="left">1st Qu.:-143.0</td>
+<td align="left">1st Qu.:-300</td>
+<td align="left">1st Qu.:  -9</td>
+<td align="left">1st Qu.: 131</td>
+<td align="left">#DIV/0! :   78</td>
+<td align="left">#DIV/0! :   80</td>
+<td align="left">#DIV/0! :   11</td>
+<td align="left">#DIV/0! :   77</td>
+<td align="left">#DIV/0! :   80</td>
+<td align="left">#DIV/0! :   11</td>
+<td align="left">1st Qu.:  0</td>
+<td align="left">1st Qu.:  -2</td>
+<td align="left">1st Qu.:29</td>
+<td align="left">1st Qu.:-42</td>
+<td align="left">1st Qu.: -73</td>
+<td align="left">1st Qu.: 8</td>
+<td align="left">1st Qu.:  5</td>
+<td align="left">1st Qu.: 10</td>
+<td align="left">1st Qu.:13</td>
+<td align="left">1st Qu.: -18.5</td>
+<td align="left">1st Qu.: -40.9</td>
+<td align="left">1st Qu.: -77.64</td>
+<td align="left">#DIV/0!:    5</td>
+<td align="left">-0.5464:    2</td>
+<td align="left">#DIV/0!:  406</td>
+<td align="left">#DIV/0!:    4</td>
+<td align="left">-0.2328:    2</td>
+<td align="left">#DIV/0!:  406</td>
+<td align="left">1st Qu.:-27</td>
+<td align="left">1st Qu.: -67</td>
+<td align="left">-0.6   :   20</td>
+<td align="left">1st Qu.: -60</td>
+<td align="left">1st Qu.: -92</td>
+<td align="left">-0.6   :   20</td>
+<td align="left">1st Qu.: 15</td>
+<td align="left">1st Qu.: 17</td>
+<td align="left">#DIV/0!:    5</td>
+<td align="left">1st Qu.: 4.0</td>
+<td align="left">1st Qu.:  0</td>
+<td align="left">1st Qu.: -12</td>
+<td align="left">1st Qu.:  5</td>
+<td align="left">1st Qu.:   22</td>
+<td align="left">1st Qu.:-42</td>
+<td align="left">1st Qu.: 3</td>
+<td align="left">1st Qu.:  12</td>
+<td align="left">1st Qu.: -77</td>
+<td align="left">1st Qu.:  4</td>
+<td align="left">1st Qu.:   15</td>
+<td align="left">1st Qu.:  -0.03</td>
+<td align="left">1st Qu.:-0.14</td>
+<td align="left">1st Qu.: -0.3</td>
+<td align="left">1st Qu.: -50.0</td>
+<td align="left">1st Qu.:  -8.0</td>
+<td align="left">1st Qu.:-142.0</td>
+<td align="left">1st Qu.:-535</td>
+<td align="left">1st Qu.:  231</td>
+<td align="left">1st Qu.: -45.0</td>
+<td align="left">1st Qu.:  -0.74</td>
+<td align="left">1st Qu.:  0.00</td>
+<td align="left">1st Qu.: -68.6</td>
+<td align="left">#DIV/0!:   84</td>
+<td align="left">#DIV/0!:   85</td>
+<td align="left">#DIV/0!:  406</td>
+<td align="left">#DIV/0!:   83</td>
+<td align="left">#DIV/0!:   85</td>
+<td align="left">#DIV/0!:  406</td>
+<td align="left">1st Qu.:  0</td>
+<td align="left">1st Qu.:   0</td>
+<td align="left">#DIV/0!:   84</td>
+<td align="left">1st Qu.: -6</td>
+<td align="left">1st Qu.:-175</td>
+<td align="left">#DIV/0!:   84</td>
+<td align="left">1st Qu.:  1</td>
+<td align="left">1st Qu.:  2</td>
+<td align="left">#DIV/0!:   84</td>
+<td align="left">1st Qu.: 29.0</td>
+<td align="left">1st Qu.:  7</td>
+<td align="left">1st Qu.:  -1</td>
+<td align="left">1st Qu.:  0</td>
+<td align="left">1st Qu.:    0</td>
+<td align="left">1st Qu.:  0</td>
+<td align="left">1st Qu.: 0</td>
+<td align="left">1st Qu.:   0</td>
+<td align="left">1st Qu.: -26</td>
+<td align="left">1st Qu.:  1</td>
+<td align="left">1st Qu.:    0</td>
+<td align="left">1st Qu.: -0.220</td>
+<td align="left">1st Qu.: -1.46</td>
+<td align="left">1st Qu.: -0.18</td>
+<td align="left">1st Qu.:-178.0</td>
+<td align="left">1st Qu.:  57</td>
+<td align="left">1st Qu.:-182.0</td>
+<td align="left">1st Qu.: -616</td>
+<td align="left">1st Qu.:   2</td>
+<td align="left">1st Qu.: 191</td>
+<td align="left">B:3797</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">Median : 9812</td>
+<td align="left">eurico  :3070</td>
+<td align="left">Median :1.32e+09</td>
+<td align="left">Median :496380</td>
+<td align="left">30/11/2011 17:11: 1440</td>
+<td align="left">NA</td>
+<td align="left">Median :424</td>
+<td align="left">Median :113.0</td>
+<td align="left">Median :  5.28</td>
+<td align="left">Median : -13.0</td>
+<td align="left">Median :17.0</td>
+<td align="left">-1.908453:    2</td>
+<td align="left">47.000000:    4</td>
+<td align="left">NA</td>
+<td align="left">0.000000 :    4</td>
+<td align="left">0.000000 :    4</td>
+<td align="left">NA</td>
+<td align="left">Median : -5</td>
+<td align="left">Median :18</td>
+<td align="left">-1.4   :   29</td>
+<td align="left">Median :  -8</td>
+<td align="left">Median :16</td>
+<td align="left">-1.4   :   29</td>
+<td align="left">Median :  1</td>
+<td align="left">Median : 1</td>
+<td align="left">0.00   :   12</td>
+<td align="left">Median : 0</td>
+<td align="left">Median :116</td>
+<td align="left">Median : 0</td>
+<td align="left">Median :  0</td>
+<td align="left">Median :  5</td>
+<td align="left">Median :0</td>
+<td align="left">Median : 0</td>
+<td align="left">Median :  -7</td>
+<td align="left">Median :  0</td>
+<td align="left">Median :    0</td>
+<td align="left">Median : 0.0300</td>
+<td align="left">Median : 0.0200</td>
+<td align="left">Median :-0.100</td>
+<td align="left">Median : -15.00</td>
+<td align="left">Median : 35.0</td>
+<td align="left">Median :-152.0</td>
+<td align="left">Median : 35.0</td>
+<td align="left">Median :601</td>
+<td align="left">Median :-320</td>
+<td align="left">Median :   0.0</td>
+<td align="left">Median :  0.00</td>
+<td align="left">Median :   0.00</td>
+<td align="left">Median :27.0</td>
+<td align="left">Median : 41</td>
+<td align="left">Median :   0</td>
+<td align="left">Median :  6</td>
+<td align="left">Median :   33</td>
+<td align="left">Median :  0</td>
+<td align="left">Median : 8</td>
+<td align="left">Median :  66</td>
+<td align="left">Median :   0</td>
+<td align="left">Median : 17</td>
+<td align="left">Median :  278</td>
+<td align="left">Median : 0.080</td>
+<td align="left">Median :-0.240</td>
+<td align="left">Median : 0.23</td>
+<td align="left">Median : -44.0</td>
+<td align="left">Median :  14.0</td>
+<td align="left">Median : -47.0</td>
+<td align="left">Median : 289</td>
+<td align="left">Median : 202</td>
+<td align="left">Median : 444</td>
+<td align="left">-0.02438:    1</td>
+<td align="left">-0.00484:    1</td>
+<td align="left">0.55844 :    2</td>
+<td align="left">-0.00051:    1</td>
+<td align="left">-0.00184:    1</td>
+<td align="left">-1.62032:    2</td>
+<td align="left">Median :  5</td>
+<td align="left">Median :  23</td>
+<td align="left">Median :34</td>
+<td align="left">Median :-22</td>
+<td align="left">Median : -34</td>
+<td align="left">Median :13</td>
+<td align="left">Median : 28</td>
+<td align="left">Median : 55</td>
+<td align="left">Median :22</td>
+<td align="left">Median :  48.2</td>
+<td align="left">Median : -21.0</td>
+<td align="left">Median :  -3.32</td>
+<td align="left">-0.2583:    2</td>
+<td align="left">-0.9334:    2</td>
+<td align="left">NA</td>
+<td align="left">-0.9324:    2</td>
+<td align="left">-0.3521:    2</td>
+<td align="left">NA</td>
+<td align="left">Median : 15</td>
+<td align="left">Median :  40</td>
+<td align="left">0.2    :   19</td>
+<td align="left">Median : -44</td>
+<td align="left">Median : -66</td>
+<td align="left">0.2    :   19</td>
+<td align="left">Median : 35</td>
+<td align="left">Median : 42</td>
+<td align="left">0.00   :  401</td>
+<td align="left">Median :10.0</td>
+<td align="left">Median :  1</td>
+<td align="left">Median :  48</td>
+<td align="left">Median : 12</td>
+<td align="left">Median :  149</td>
+<td align="left">Median :-20</td>
+<td align="left">Median : 8</td>
+<td align="left">Median :  65</td>
+<td align="left">Median :  -5</td>
+<td align="left">Median : 10</td>
+<td align="left">Median :  105</td>
+<td align="left">Median :   0.13</td>
+<td align="left">Median : 0.03</td>
+<td align="left">Median : -0.1</td>
+<td align="left">Median :  -8.0</td>
+<td align="left">Median :  41.5</td>
+<td align="left">Median :  -1.0</td>
+<td align="left">Median :-479</td>
+<td align="left">Median :  311</td>
+<td align="left">Median :  13.0</td>
+<td align="left">Median :  21.70</td>
+<td align="left">Median :  9.24</td>
+<td align="left">Median :   0.0</td>
+<td align="left">-0.8079:    2</td>
+<td align="left">-0.0073:    1</td>
+<td align="left">NA</td>
+<td align="left">-0.1912:    2</td>
+<td align="left">0.0000 :    4</td>
+<td align="left">NA</td>
+<td align="left">Median : 27</td>
+<td align="left">Median : 113</td>
+<td align="left">-1.2   :   32</td>
+<td align="left">Median :  0</td>
+<td align="left">Median : -61</td>
+<td align="left">-1.2   :   32</td>
+<td align="left">Median : 18</td>
+<td align="left">Median : 84</td>
+<td align="left">0.00   :  322</td>
+<td align="left">Median : 36.0</td>
+<td align="left">Median : 21</td>
+<td align="left">Median :  11</td>
+<td align="left">Median :  8</td>
+<td align="left">Median :   64</td>
+<td align="left">Median : 12</td>
+<td align="left">Median : 6</td>
+<td align="left">Median :  30</td>
+<td align="left">Median :   0</td>
+<td align="left">Median : 25</td>
+<td align="left">Median :  612</td>
+<td align="left">Median :  0.050</td>
+<td align="left">Median :  0.03</td>
+<td align="left">Median :  0.08</td>
+<td align="left">Median : -57.0</td>
+<td align="left">Median : 201</td>
+<td align="left">Median : -39.0</td>
+<td align="left">Median : -378</td>
+<td align="left">Median : 591</td>
+<td align="left">Median : 511</td>
+<td align="left">C:3422</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">Mean   : 9812</td>
+<td align="left">charles :3536</td>
+<td align="left">Mean   :1.32e+09</td>
+<td align="left">Mean   :500656</td>
+<td align="left">05/12/2011 11:25: 1425</td>
+<td align="left">NA</td>
+<td align="left">Mean   :431</td>
+<td align="left">Mean   : 64.4</td>
+<td align="left">Mean   :  0.31</td>
+<td align="left">Mean   : -11.2</td>
+<td align="left">Mean   :11.3</td>
+<td align="left">-0.016850:    1</td>
+<td align="left">-0.150950:    3</td>
+<td align="left">NA</td>
+<td align="left">0.422463 :    2</td>
+<td align="left">-2.156553:    3</td>
+<td align="left">NA</td>
+<td align="left">Mean   : -7</td>
+<td align="left">Mean   :13</td>
+<td align="left">-1.2   :   26</td>
+<td align="left">Mean   : -10</td>
+<td align="left">Mean   :11</td>
+<td align="left">-1.2   :   26</td>
+<td align="left">Mean   :  4</td>
+<td align="left">Mean   : 2</td>
+<td align="left">0.0000 :  384</td>
+<td align="left">Mean   : 1</td>
+<td align="left">Mean   : 68</td>
+<td align="left">Mean   : 1</td>
+<td align="left">Mean   :  8</td>
+<td align="left">Mean   :  1</td>
+<td align="left">Mean   :1</td>
+<td align="left">Mean   : 1</td>
+<td align="left">Mean   :  -9</td>
+<td align="left">Mean   :  1</td>
+<td align="left">Mean   :  107</td>
+<td align="left">Mean   :-0.0056</td>
+<td align="left">Mean   : 0.0396</td>
+<td align="left">Mean   :-0.130</td>
+<td align="left">Mean   :  -5.59</td>
+<td align="left">Mean   : 30.1</td>
+<td align="left">Mean   : -72.6</td>
+<td align="left">Mean   : 55.6</td>
+<td align="left">Mean   :594</td>
+<td align="left">Mean   :-346</td>
+<td align="left">Mean   :  17.8</td>
+<td align="left">Mean   : -4.61</td>
+<td align="left">Mean   :  -0.62</td>
+<td align="left">Mean   :25.5</td>
+<td align="left">Mean   : 53</td>
+<td align="left">Mean   :  13</td>
+<td align="left">Mean   : 11</td>
+<td align="left">Mean   :  417</td>
+<td align="left">Mean   : -5</td>
+<td align="left">Mean   :10</td>
+<td align="left">Mean   : 196</td>
+<td align="left">Mean   :   2</td>
+<td align="left">Mean   : 22</td>
+<td align="left">Mean   : 1056</td>
+<td align="left">Mean   : 0.043</td>
+<td align="left">Mean   :-0.257</td>
+<td align="left">Mean   : 0.27</td>
+<td align="left">Mean   : -60.2</td>
+<td align="left">Mean   :  32.6</td>
+<td align="left">Mean   : -71.2</td>
+<td align="left">Mean   : 192</td>
+<td align="left">Mean   : 157</td>
+<td align="left">Mean   : 306</td>
+<td align="left">-0.04190:    1</td>
+<td align="left">-0.01311:    1</td>
+<td align="left">0.65132 :    2</td>
+<td align="left">-0.00696:    1</td>
+<td align="left">-0.01185:    1</td>
+<td align="left">0.55053 :    2</td>
+<td align="left">Mean   : 11</td>
+<td align="left">Mean   :  36</td>
+<td align="left">Mean   :35</td>
+<td align="left">Mean   :-21</td>
+<td align="left">Mean   : -34</td>
+<td align="left">Mean   :15</td>
+<td align="left">Mean   : 32</td>
+<td align="left">Mean   : 70</td>
+<td align="left">Mean   :21</td>
+<td align="left">Mean   :  23.8</td>
+<td align="left">Mean   : -10.8</td>
+<td align="left">Mean   :   1.67</td>
+<td align="left">-0.3705:    2</td>
+<td align="left">-2.0833:    2</td>
+<td align="left">NA</td>
+<td align="left">0.1110 :    2</td>
+<td align="left">-0.7036:    2</td>
+<td align="left">NA</td>
+<td align="left">Mean   : 14</td>
+<td align="left">Mean   :  33</td>
+<td align="left">-0.8   :   18</td>
+<td align="left">Mean   : -41</td>
+<td align="left">Mean   : -33</td>
+<td align="left">-0.8   :   18</td>
+<td align="left">Mean   : 55</td>
+<td align="left">Mean   : 66</td>
+<td align="left">NA</td>
+<td align="left">Mean   :13.7</td>
+<td align="left">Mean   :  4</td>
+<td align="left">Mean   :  24</td>
+<td align="left">Mean   : 21</td>
+<td align="left">Mean   : 1020</td>
+<td align="left">Mean   :-12</td>
+<td align="left">Mean   :13</td>
+<td align="left">Mean   : 350</td>
+<td align="left">Mean   :   0</td>
+<td align="left">Mean   : 17</td>
+<td align="left">Mean   :  590</td>
+<td align="left">Mean   :   0.16</td>
+<td align="left">Mean   : 0.05</td>
+<td align="left">Mean   : -0.1</td>
+<td align="left">Mean   : -28.6</td>
+<td align="left">Mean   :  52.6</td>
+<td align="left">Mean   : -38.3</td>
+<td align="left">Mean   :-328</td>
+<td align="left">Mean   :  221</td>
+<td align="left">Mean   :  46.1</td>
+<td align="left">Mean   :  33.83</td>
+<td align="left">Mean   : 10.71</td>
+<td align="left">Mean   :  19.2</td>
+<td align="left">-0.9169:    2</td>
+<td align="left">-0.0442:    1</td>
+<td align="left">NA</td>
+<td align="left">-0.4126:    2</td>
+<td align="left">-0.6992:    2</td>
+<td align="left">NA</td>
+<td align="left">Mean   : 24</td>
+<td align="left">Mean   :  81</td>
+<td align="left">-1.3   :   31</td>
+<td align="left">Mean   :  0</td>
+<td align="left">Mean   : -58</td>
+<td align="left">-1.3   :   31</td>
+<td align="left">Mean   : 25</td>
+<td align="left">Mean   :139</td>
+<td align="left">NA</td>
+<td align="left">Mean   : 34.7</td>
+<td align="left">Mean   : 34</td>
+<td align="left">Mean   :  33</td>
+<td align="left">Mean   : 42</td>
+<td align="left">Mean   : 5274</td>
+<td align="left">Mean   : 12</td>
+<td align="left">Mean   : 8</td>
+<td align="left">Mean   : 140</td>
+<td align="left">Mean   :  18</td>
+<td align="left">Mean   : 45</td>
+<td align="left">Mean   : 4640</td>
+<td align="left">Mean   :  0.158</td>
+<td align="left">Mean   :  0.08</td>
+<td align="left">Mean   :  0.15</td>
+<td align="left">Mean   : -61.7</td>
+<td align="left">Mean   : 164</td>
+<td align="left">Mean   : -55.3</td>
+<td align="left">Mean   : -313</td>
+<td align="left">Mean   : 380</td>
+<td align="left">Mean   : 394</td>
+<td align="left">D:3216</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">3rd Qu.:14717</td>
+<td align="left">jeremy  :3402</td>
+<td align="left">3rd Qu.:1.32e+09</td>
+<td align="left">3rd Qu.:751891</td>
+<td align="left">02/12/2011 14:57: 1380</td>
+<td align="left">NA</td>
+<td align="left">3rd Qu.:644</td>
+<td align="left">3rd Qu.:123.0</td>
+<td align="left">3rd Qu.: 14.90</td>
+<td align="left">3rd Qu.:  12.9</td>
+<td align="left">3rd Qu.:18.0</td>
+<td align="left">-0.021024:    1</td>
+<td align="left">-0.684748:    3</td>
+<td align="left">NA</td>
+<td align="left">-0.003095:    1</td>
+<td align="left">-3.072669:    3</td>
+<td align="left">NA</td>
+<td align="left">3rd Qu.: 18</td>
+<td align="left">3rd Qu.:19</td>
+<td align="left">-0.9   :   24</td>
+<td align="left">3rd Qu.:   9</td>
+<td align="left">3rd Qu.:17</td>
+<td align="left">-0.9   :   24</td>
+<td align="left">3rd Qu.:  2</td>
+<td align="left">3rd Qu.: 2</td>
+<td align="left">NA</td>
+<td align="left">3rd Qu.: 0</td>
+<td align="left">3rd Qu.:123</td>
+<td align="left">3rd Qu.: 1</td>
+<td align="left">3rd Qu.:  0</td>
+<td align="left">3rd Qu.: 16</td>
+<td align="left">3rd Qu.:1</td>
+<td align="left">3rd Qu.: 0</td>
+<td align="left">3rd Qu.:  14</td>
+<td align="left">3rd Qu.:  1</td>
+<td align="left">3rd Qu.:    0</td>
+<td align="left">3rd Qu.: 0.1100</td>
+<td align="left">3rd Qu.: 0.1100</td>
+<td align="left">3rd Qu.:-0.020</td>
+<td align="left">3rd Qu.:  -5.00</td>
+<td align="left">3rd Qu.: 61.0</td>
+<td align="left">3rd Qu.:  27.0</td>
+<td align="left">3rd Qu.: 59.0</td>
+<td align="left">3rd Qu.:610</td>
+<td align="left">3rd Qu.:-306</td>
+<td align="left">3rd Qu.:  77.3</td>
+<td align="left">3rd Qu.: 11.20</td>
+<td align="left">3rd Qu.:  45.88</td>
+<td align="left">3rd Qu.:33.0</td>
+<td align="left">3rd Qu.: 76</td>
+<td align="left">3rd Qu.:  76</td>
+<td align="left">3rd Qu.: 15</td>
+<td align="left">3rd Qu.:  223</td>
+<td align="left">3rd Qu.:  8</td>
+<td align="left">3rd Qu.:16</td>
+<td align="left">3rd Qu.: 267</td>
+<td align="left">3rd Qu.:  38</td>
+<td align="left">3rd Qu.: 36</td>
+<td align="left">3rd Qu.: 1295</td>
+<td align="left">3rd Qu.: 1.570</td>
+<td align="left">3rd Qu.: 0.140</td>
+<td align="left">3rd Qu.: 0.72</td>
+<td align="left">3rd Qu.:  84.0</td>
+<td align="left">3rd Qu.: 139.0</td>
+<td align="left">3rd Qu.:  23.0</td>
+<td align="left">3rd Qu.: 637</td>
+<td align="left">3rd Qu.: 323</td>
+<td align="left">3rd Qu.: 545</td>
+<td align="left">-0.05051:    1</td>
+<td align="left">-0.02967:    1</td>
+<td align="left">-0.01548:    1</td>
+<td align="left">-0.01884:    1</td>
+<td align="left">-0.01247:    1</td>
+<td align="left">-0.00311:    1</td>
+<td align="left">3rd Qu.: 27</td>
+<td align="left">3rd Qu.:  96</td>
+<td align="left">3rd Qu.:41</td>
+<td align="left">3rd Qu.:  0</td>
+<td align="left">3rd Qu.:   0</td>
+<td align="left">3rd Qu.:19</td>
+<td align="left">3rd Qu.: 51</td>
+<td align="left">3rd Qu.:115</td>
+<td align="left">3rd Qu.:29</td>
+<td align="left">3rd Qu.:  67.6</td>
+<td align="left">3rd Qu.:  17.5</td>
+<td align="left">3rd Qu.:  79.64</td>
+<td align="left">-0.5855:    2</td>
+<td align="left">-2.0851:    2</td>
+<td align="left">NA</td>
+<td align="left">1.0312 :    2</td>
+<td align="left">0.1090 :    2</td>
+<td align="left">NA</td>
+<td align="left">3rd Qu.: 51</td>
+<td align="left">3rd Qu.: 133</td>
+<td align="left">-0.3   :   16</td>
+<td align="left">3rd Qu.: -25</td>
+<td align="left">3rd Qu.:  21</td>
+<td align="left">-0.3   :   16</td>
+<td align="left">3rd Qu.: 81</td>
+<td align="left">3rd Qu.:100</td>
+<td align="left">NA</td>
+<td align="left">3rd Qu.:19.0</td>
+<td align="left">3rd Qu.:  3</td>
+<td align="left">3rd Qu.:  64</td>
+<td align="left">3rd Qu.: 26</td>
+<td align="left">3rd Qu.:  695</td>
+<td align="left">3rd Qu.: 13</td>
+<td align="left">3rd Qu.:19</td>
+<td align="left">3rd Qu.: 370</td>
+<td align="left">3rd Qu.:  71</td>
+<td align="left">3rd Qu.: 25</td>
+<td align="left">3rd Qu.:  609</td>
+<td align="left">3rd Qu.:   0.35</td>
+<td align="left">3rd Qu.: 0.21</td>
+<td align="left">3rd Qu.:  0.0</td>
+<td align="left">3rd Qu.:  11.0</td>
+<td align="left">3rd Qu.: 111.0</td>
+<td align="left">3rd Qu.:  38.0</td>
+<td align="left">3rd Qu.:-304</td>
+<td align="left">3rd Qu.:  390</td>
+<td align="left">3rd Qu.:  95.0</td>
+<td align="left">3rd Qu.: 140.00</td>
+<td align="left">3rd Qu.: 28.40</td>
+<td align="left">3rd Qu.: 110.0</td>
+<td align="left">-0.0227:    1</td>
+<td align="left">-0.0489:    1</td>
+<td align="left">NA</td>
+<td align="left">-0.0004:    1</td>
+<td align="left">-0.0113:    1</td>
+<td align="left">NA</td>
+<td align="left">3rd Qu.: 46</td>
+<td align="left">3rd Qu.: 175</td>
+<td align="left">-1.4   :   24</td>
+<td align="left">3rd Qu.: 12</td>
+<td align="left">3rd Qu.:   0</td>
+<td align="left">-1.4   :   24</td>
+<td align="left">3rd Qu.: 40</td>
+<td align="left">3rd Qu.:350</td>
+<td align="left">NA</td>
+<td align="left">3rd Qu.: 41.0</td>
+<td align="left">3rd Qu.: 51</td>
+<td align="left">3rd Qu.: 107</td>
+<td align="left">3rd Qu.: 85</td>
+<td align="left">3rd Qu.: 7289</td>
+<td align="left">3rd Qu.: 28</td>
+<td align="left">3rd Qu.:13</td>
+<td align="left">3rd Qu.: 166</td>
+<td align="left">3rd Qu.:  86</td>
+<td align="left">3rd Qu.: 86</td>
+<td align="left">3rd Qu.: 7368</td>
+<td align="left">3rd Qu.:  0.560</td>
+<td align="left">3rd Qu.:  1.62</td>
+<td align="left">3rd Qu.:  0.49</td>
+<td align="left">3rd Qu.:  76.0</td>
+<td align="left">3rd Qu.: 312</td>
+<td align="left">3rd Qu.:  26.0</td>
+<td align="left">3rd Qu.:  -73</td>
+<td align="left">3rd Qu.: 737</td>
+<td align="left">3rd Qu.: 653</td>
+<td align="left">E:3607</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">Max.   :19622</td>
+<td align="left">pedro   :2610</td>
+<td align="left">Max.   :1.32e+09</td>
+<td align="left">Max.   :998801</td>
+<td align="left">02/12/2011 13:34: 1375</td>
+<td align="left">NA</td>
+<td align="left">Max.   :864</td>
+<td align="left">Max.   :162.0</td>
+<td align="left">Max.   : 60.30</td>
+<td align="left">Max.   : 179.0</td>
+<td align="left">Max.   :29.0</td>
+<td align="left">-0.025513:    1</td>
+<td align="left">-1.750749:    3</td>
+<td align="left">NA</td>
+<td align="left">-0.010002:    1</td>
+<td align="left">-6.324555:    3</td>
+<td align="left">NA</td>
+<td align="left">Max.   :180</td>
+<td align="left">Max.   :30</td>
+<td align="left">-1.3   :   22</td>
+<td align="left">Max.   : 173</td>
+<td align="left">Max.   :23</td>
+<td align="left">-1.3   :   22</td>
+<td align="left">Max.   :360</td>
+<td align="left">Max.   :12</td>
+<td align="left">NA</td>
+<td align="left">Max.   :16</td>
+<td align="left">Max.   :157</td>
+<td align="left">Max.   :14</td>
+<td align="left">Max.   :201</td>
+<td align="left">Max.   : 60</td>
+<td align="left">Max.   :4</td>
+<td align="left">Max.   :16</td>
+<td align="left">Max.   : 174</td>
+<td align="left">Max.   :177</td>
+<td align="left">Max.   :31183</td>
+<td align="left">Max.   : 2.2200</td>
+<td align="left">Max.   : 0.6400</td>
+<td align="left">Max.   : 1.620</td>
+<td align="left">Max.   :  85.00</td>
+<td align="left">Max.   :164.0</td>
+<td align="left">Max.   : 105.0</td>
+<td align="left">Max.   :485.0</td>
+<td align="left">Max.   :673</td>
+<td align="left">Max.   : 293</td>
+<td align="left">Max.   : 180.0</td>
+<td align="left">Max.   : 88.50</td>
+<td align="left">Max.   : 180.00</td>
+<td align="left">Max.   :66.0</td>
+<td align="left">Max.   :332</td>
+<td align="left">Max.   : 163</td>
+<td align="left">Max.   :162</td>
+<td align="left">Max.   :26232</td>
+<td align="left">Max.   : 76</td>
+<td align="left">Max.   :43</td>
+<td align="left">Max.   :1885</td>
+<td align="left">Max.   : 152</td>
+<td align="left">Max.   :177</td>
+<td align="left">Max.   :31345</td>
+<td align="left">Max.   : 4.870</td>
+<td align="left">Max.   : 2.840</td>
+<td align="left">Max.   : 3.02</td>
+<td align="left">Max.   : 437.0</td>
+<td align="left">Max.   : 308.0</td>
+<td align="left">Max.   : 292.0</td>
+<td align="left">Max.   : 782</td>
+<td align="left">Max.   : 583</td>
+<td align="left">Max.   : 694</td>
+<td align="left">-0.05695:    1</td>
+<td align="left">-0.07394:    1</td>
+<td align="left">-0.01749:    1</td>
+<td align="left">-0.03359:    1</td>
+<td align="left">-0.02063:    1</td>
+<td align="left">-0.00562:    1</td>
+<td align="left">Max.   : 86</td>
+<td align="left">Max.   : 180</td>
+<td align="left">Max.   :65</td>
+<td align="left">Max.   : 66</td>
+<td align="left">Max.   : 152</td>
+<td align="left">Max.   :38</td>
+<td align="left">Max.   :120</td>
+<td align="left">Max.   :360</td>
+<td align="left">Max.   :52</td>
+<td align="left">Max.   : 153.6</td>
+<td align="left">Max.   : 149.4</td>
+<td align="left">Max.   : 154.95</td>
+<td align="left">-2.0851:    2</td>
+<td align="left">-2.0889:    2</td>
+<td align="left">NA</td>
+<td align="left">-0.0082:    1</td>
+<td align="left">1.0326 :    2</td>
+<td align="left">NA</td>
+<td align="left">Max.   :137</td>
+<td align="left">Max.   : 155</td>
+<td align="left">-0.2   :   15</td>
+<td align="left">Max.   :  73</td>
+<td align="left">Max.   : 121</td>
+<td align="left">-0.2   :   15</td>
+<td align="left">Max.   :256</td>
+<td align="left">Max.   :274</td>
+<td align="left">NA</td>
+<td align="left">Max.   :58.0</td>
+<td align="left">Max.   :230</td>
+<td align="left">Max.   : 126</td>
+<td align="left">Max.   :124</td>
+<td align="left">Max.   :15321</td>
+<td align="left">Max.   : 94</td>
+<td align="left">Max.   :83</td>
+<td align="left">Max.   :6836</td>
+<td align="left">Max.   : 135</td>
+<td align="left">Max.   :107</td>
+<td align="left">Max.   :11468</td>
+<td align="left">Max.   :   2.22</td>
+<td align="left">Max.   :52.00</td>
+<td align="left">Max.   :317.0</td>
+<td align="left">Max.   : 235.0</td>
+<td align="left">Max.   : 315.0</td>
+<td align="left">Max.   : 318.0</td>
+<td align="left">Max.   : 592</td>
+<td align="left">Max.   :  633</td>
+<td align="left">Max.   : 452.0</td>
+<td align="left">Max.   : 180.00</td>
+<td align="left">Max.   : 89.80</td>
+<td align="left">Max.   : 180.0</td>
+<td align="left">-0.0359:    1</td>
+<td align="left">-0.0523:    1</td>
+<td align="left">NA</td>
+<td align="left">-0.0013:    1</td>
+<td align="left">-0.0131:    1</td>
+<td align="left">NA</td>
+<td align="left">Max.   : 90</td>
+<td align="left">Max.   : 180</td>
+<td align="left">-1.5   :   24</td>
+<td align="left">Max.   : 62</td>
+<td align="left">Max.   : 167</td>
+<td align="left">-1.5   :   24</td>
+<td align="left">Max.   :126</td>
+<td align="left">Max.   :360</td>
+<td align="left">NA</td>
+<td align="left">Max.   :108.0</td>
+<td align="left">Max.   :173</td>
+<td align="left">Max.   : 177</td>
+<td align="left">Max.   :179</td>
+<td align="left">Max.   :32102</td>
+<td align="left">Max.   : 72</td>
+<td align="left">Max.   :48</td>
+<td align="left">Max.   :2280</td>
+<td align="left">Max.   : 169</td>
+<td align="left">Max.   :198</td>
+<td align="left">Max.   :39009</td>
+<td align="left">Max.   :  3.970</td>
+<td align="left">Max.   :311.00</td>
+<td align="left">Max.   :231.00</td>
+<td align="left">Max.   : 477.0</td>
+<td align="left">Max.   : 923</td>
+<td align="left">Max.   : 291.0</td>
+<td align="left">Max.   :  672</td>
+<td align="left">Max.   :1480</td>
+<td align="left">Max.   :1090</td>
+<td align="left">NA</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">(Other)         :11007</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">(Other)  :  391</td>
+<td align="left">(Other)  :  361</td>
+<td align="left">NA</td>
+<td align="left">(Other)  :  389</td>
+<td align="left">(Other)  :  361</td>
+<td align="left">NA</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">(Other):  275</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">(Other):  275</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">(Other) :  324</td>
+<td align="left">(Other) :  322</td>
+<td align="left">(Other) :  389</td>
+<td align="left">(Other) :  325</td>
+<td align="left">(Other) :  322</td>
+<td align="left">(Other) :  389</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">(Other):  393</td>
+<td align="left">(Other):  396</td>
+<td align="left">NA</td>
+<td align="left">(Other):  395</td>
+<td align="left">(Other):  396</td>
+<td align="left">NA</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">(Other):  318</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">(Other):  318</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">(Other):  316</td>
+<td align="left">(Other):  317</td>
+<td align="left">NA</td>
+<td align="left">(Other):  317</td>
+<td align="left">(Other):  313</td>
+<td align="left">NA</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">(Other):  211</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">(Other):  211</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA&#39;s   :19216</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+</tbody></table>
+
+<p>We will remove such variables</p>
+
+<pre><code class="r">pml2&lt;-pml[,-grep(&quot;avg_|max_|min_|var_|stddev_|skewness_|kurtosis_|amplitude_&quot;,names(pml))]
+colSums(is.na(pml2))
+</code></pre>
+
+<pre><code>##                    X            user_name raw_timestamp_part_1 
+##                    0                    0                    0 
+## raw_timestamp_part_2       cvtd_timestamp           new_window 
+##                    0                    0                    0 
+##           num_window            roll_belt           pitch_belt 
+##                    0                    0                    0 
+##             yaw_belt     total_accel_belt         gyros_belt_x 
+##                    0                    0                    0 
+##         gyros_belt_y         gyros_belt_z         accel_belt_x 
+##                    0                    0                    0 
+##         accel_belt_y         accel_belt_z        magnet_belt_x 
+##                    0                    0                    0 
+##        magnet_belt_y        magnet_belt_z             roll_arm 
+##                    0                    0                    0 
+##            pitch_arm              yaw_arm      total_accel_arm 
+##                    0                    0                    0 
+##          gyros_arm_x          gyros_arm_y          gyros_arm_z 
+##                    0                    0                    0 
+##          accel_arm_x          accel_arm_y          accel_arm_z 
+##                    0                    0                    0 
+##         magnet_arm_x         magnet_arm_y         magnet_arm_z 
+##                    0                    0                    0 
+##        roll_dumbbell       pitch_dumbbell         yaw_dumbbell 
+##                    0                    0                    0 
+## total_accel_dumbbell     gyros_dumbbell_x     gyros_dumbbell_y 
+##                    0                    0                    0 
+##     gyros_dumbbell_z     accel_dumbbell_x     accel_dumbbell_y 
+##                    0                    0                    0 
+##     accel_dumbbell_z    magnet_dumbbell_x    magnet_dumbbell_y 
+##                    0                    0                    0 
+##    magnet_dumbbell_z         roll_forearm        pitch_forearm 
+##                    0                    0                    0 
+##          yaw_forearm  total_accel_forearm      gyros_forearm_x 
+##                    0                    0                    0 
+##      gyros_forearm_y      gyros_forearm_z      accel_forearm_x 
+##                    0                    0                    0 
+##      accel_forearm_y      accel_forearm_z     magnet_forearm_x 
+##                    0                    0                    0 
+##     magnet_forearm_y     magnet_forearm_z               classe 
+##                    0                    0                    0
+</code></pre>
+
+<p>We will also remove the first 7 variables  as our model should be independent of them.</p>
+
+<pre><code class="r">pml2&lt;-pml2[,-c(1:7)]
+</code></pre>
+
+<h2>Machine learning model</h2>
+
+<p>Now we will split the dataset into a training and testing part.
+The trainig part will contain 60% of data and will be used for training of our model. The test part will be used for cross validation</p>
+
+<pre><code class="r">library(caret)
+set.seed(1234)
+InTrain&lt;-createDataPartition(y=pml2$classe,p=0.6,list=FALSE)
+training&lt;-pml2[InTrain,]
+testing&lt;-pml2[-InTrain,]
+</code></pre>
+
+<p>As this is a classification problem we&#39;ve choosen a model based on random forrest algorithm.</p>
+
+<pre><code class="r">rf&lt;-train(classe~.,data=training,method=&quot;rf&quot;)
+</code></pre>
+
+<pre><code class="r">&gt; &gt; &gt; rf
+Random Forest 
+
+11776 samples
+   52 predictor
+    5 classes: &#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39; 
+
+No pre-processing
+Resampling: Bootstrapped (25 reps) 
+
+Summary of sample sizes: 11776, 11776, 11776, 11776, 11776, 11776, ... 
+
+Resampling results across tuning parameters:
+
+  mtry  Accuracy   Kappa      Accuracy SD  Kappa SD   
+   2    0.9864051  0.9827977  0.002650521  0.003345575
+  27    0.9875215  0.9842125  0.001741941  0.002189933
+  52    0.9784516  0.9727337  0.004086763  0.005168504
+
+Accuracy was used to select the optimal model using  the largest value.
+The final value used for the model was mtry = 27. 
+</code></pre>
+
+<p>Now we will use our model on testing set and check for accuracy</p>
+
+<pre><code class="r">&gt; pr&lt;-predict(rf,testing)
+&gt; table(pr,testing$classe)
+
+pr     A    B    C    D    E
+  A 2219   10    0    0    0
+  B    8 1499   10    0    0
+  C    3    9 1348   22    0
+  D    0    0   10 1263   10
+  E    2    0    0    1 1432
+</code></pre>
+
+<p>Callculate the accuracy.</p>
+
+<pre><code class="r">sum(predict(rf,testing) == testing$classe)/NROW(testing$classe)
+[1] 0.9891665
+</code></pre>
+
+<h2>Out of sample accuracy</h2>
+
+<p>Our expectation is that our out of sample model accuracy is &lt;=98.9 %.</p>
+
+</body>
+
+</html>
